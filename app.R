@@ -42,21 +42,20 @@ if(use_drive_mode){
     } else {
       data <- drive_data %>%
         filter(!is.na(lat) & !is.na(lon) & !is.na(DriveURL)) %>%
-        mutate(URL = DriveURL) %>%
-        select(SourceFile, FileName, URL, lat, lon, DateTimeOriginal)
+        select(SourceFile, FileName, DriveURL, lat, lon, DateTimeOriginal)
     
-    # Build popup_html with Drive URLs
-    data$popup_html <- mapply(function(fn, dt, url){
-      dt_text <- ifelse(is.na(dt) | dt == "", "", as.character(dt))
-      html <- paste0(
-        "<b>", htmlEscape(fn), "</b><br/>",
-        if(nzchar(dt_text)) paste0(htmlEscape(dt_text), "<br/>") else "",
-        "<a href='", htmlEscape(url), "' target='_blank' rel='noopener noreferrer'>",
-        "<img src='", htmlEscape(url), "' width='", thumb_width, "' style='border:1px solid #ccc'/>",
-        "</a><br/><small>Clique para abrir em nova aba</small>"
-      )
-      html
-    }, data$FileName, data$DateTimeOriginal, data$URL, SIMPLIFY = FALSE)
+      # Build popup_html with Drive URLs
+      data$popup_html <- mapply(function(fn, dt, url){
+        dt_text <- ifelse(is.na(dt) | dt == "", "", as.character(dt))
+        html <- paste0(
+          "<b>", htmlEscape(fn), "</b><br/>",
+          if(nzchar(dt_text)) paste0(htmlEscape(dt_text), "<br/>") else "",
+          "<a href='", htmlEscape(url), "' target='_blank' rel='noopener noreferrer'>",
+          "<img src='", htmlEscape(url), "' width='", thumb_width, "' style='border:1px solid #ccc'/>",
+          "</a><br/><small>Clique para abrir em nova aba</small>"
+        )
+        html
+      }, data$FileName, data$DateTimeOriginal, data$DriveURL, SIMPLIFY = FALSE)
     }
   } else {
     data <- data.frame()
@@ -152,7 +151,7 @@ ui <- fluidPage(
   sidebarLayout(
     sidebarPanel(
       if(use_drive_mode){
-        helpText("Usando modo Drive: fotos carregadas de Google Drive via data/photo_metadata_drive.csv")
+        helpText(paste("Usando modo Drive: fotos carregadas de Google Drive via", drive_csv))
       } else {
         tagList(
           helpText("Coloque suas fotos na pasta 'photos/' (mesmo diretório do app)."),
