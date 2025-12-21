@@ -1,3 +1,16 @@
+.Rhistory
+.Rproj.user
+.RData
+.Ruserdata
+/renv/library/
+/renv/python/
+.vscode/
+.Rproj.user/
+.idea/
+.DS_Store
+/photos/*
+/www/photos/*
+/www/thumbs/*
 .Rproj.user
 .Rhistory
 .RData
