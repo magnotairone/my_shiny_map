@@ -1,0 +1,48 @@
+name: R Lint and Syntax Check
+
+on:
+  push:
+    branches: [ main, initial-scaffold ]
+  pull_request:
+    branches: [ main ]
+
+env:
+  # diretório onde os pacotes R serão instalados (e em seguida cacheados)
+  R_LIBS_USER: ${{ runner.temp }}/Rlibs
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup R
+        uses: r-lib/actions/setup-r@v2
+        with:
+          r-version: '4.2'
+
+      - name: Cache R packages
+        uses: actions/cache@v4
+        id: r-cache
+        with:
+          path: ${{ env.R_LIBS_USER }}
+          key: ${{ runner.os }}-R-${{ matrix_r_version || '4.2' }}-${{ hashFiles('**/renv.lock', '**/packrat/packrat.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-R-${{ matrix_r_version || '4.2' }}-
+            ${{ runner.os }}-R-
+
+      - name: Install lintr (use cached lib if present)
+        run: |
+          Rscript -e 'dir.create(Sys.getenv("R_LIBS_USER"), recursive = TRUE, showWarnings = FALSE)'
+          Rscript -e '.libPaths(Sys.getenv("R_LIBS_USER")); install.packages("lintr", repos="https://cloud.r-project.org")'
+
+      - name: Lint R files
+        run: |
+          Rscript -e 'lintr::lint("app.R")'
+          Rscript -e 'if (dir.exists("scripts")) lintr::lint_dir("scripts")'
+
+      - name: Syntax check (parse)
+        run: |
+          Rscript -e 'parse(file="app.R")'
+          Rscript -e 'if (file.exists("scripts/extract_exif.R")) parse(file="scripts/extract_exif.R")'
