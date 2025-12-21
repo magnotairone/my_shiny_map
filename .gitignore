@@ -11,3 +11,7 @@
 /photos/*
 /www/photos/*
 /www/thumbs/*
+.Rproj.user
+.Rhistory
+.RData
+.Ruserdata
