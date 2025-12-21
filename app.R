@@ -45,7 +45,7 @@ if(use_drive_mode){
         select(SourceFile, FileName, DriveURL, lat, lon, DateTimeOriginal)
     
       # Build popup_html with Drive URLs
-      data$popup_html <- mapply(function(fn, dt, url){
+      data$popup_html <- as.character(mapply(function(fn, dt, url){
         dt_text <- ifelse(is.na(dt) | dt == "", "", as.character(dt))
         html <- paste0(
           "<b>", htmlEscape(fn), "</b><br/>",
@@ -55,7 +55,7 @@ if(use_drive_mode){
           "</a><br/><small>Clique para abrir em nova aba</small>"
         )
         html
-      }, data$FileName, data$DateTimeOriginal, data$DriveURL, SIMPLIFY = FALSE)
+      }, data$FileName, data$DateTimeOriginal, data$DriveURL, SIMPLIFY = TRUE))
     }
   } else {
     data <- data.frame()
@@ -127,7 +127,7 @@ if(use_drive_mode){
       data <- data %>% filter(!is.na(GPSLatitude) & !is.na(GPSLongitude))
       names(data)[names(data) == "GPSLatitude"] <- "lat"
       names(data)[names(data) == "GPSLongitude"] <- "lon"
-      data$popup_html <- mapply(function(fn, dt, thumb, medium){
+      data$popup_html <- as.character(mapply(function(fn, dt, thumb, medium){
         dt_text <- ifelse(is.na(dt) | dt == "", "", as.character(dt))
         thumb_url <- paste0("thumbs/", basename(thumb))
         medium_url <- paste0("photos/", basename(medium))
@@ -139,7 +139,7 @@ if(use_drive_mode){
           "</a><br/><small>Clique para abrir média em nova aba</small>"
         )
         html
-      }, data$FileName, data$DateTimeOriginal, data$Thumb, data$Medium, SIMPLIFY = FALSE)
+      }, data$FileName, data$DateTimeOriginal, data$Thumb, data$Medium, SIMPLIFY = TRUE))
     }
   } else {
     data <- data.frame()
