@@ -33,10 +33,17 @@ if(use_drive_mode){
   
   # Filter to only rows with coordinates and DriveURL
   if(nrow(drive_data) > 0){
-    data <- drive_data %>%
-      filter(!is.na(lat) & !is.na(lon) & !is.na(DriveURL)) %>%
-      mutate(URL = DriveURL) %>%
-      select(SourceFile, FileName, URL, lat, lon, DateTimeOriginal)
+    # Validate required columns
+    required_cols <- c("SourceFile", "FileName", "DriveURL", "lat", "lon", "DateTimeOriginal")
+    missing_cols <- setdiff(required_cols, names(drive_data))
+    if(length(missing_cols) > 0){
+      message("Error: Drive CSV is missing required columns: ", paste(missing_cols, collapse = ", "))
+      data <- data.frame()
+    } else {
+      data <- drive_data %>%
+        filter(!is.na(lat) & !is.na(lon) & !is.na(DriveURL)) %>%
+        mutate(URL = DriveURL) %>%
+        select(SourceFile, FileName, URL, lat, lon, DateTimeOriginal)
     
     # Build popup_html with Drive URLs
     data$popup_html <- mapply(function(fn, dt, url){
@@ -50,6 +57,7 @@ if(use_drive_mode){
       )
       html
     }, data$FileName, data$DateTimeOriginal, data$URL, SIMPLIFY = FALSE)
+    }
   } else {
     data <- data.frame()
   }
@@ -143,8 +151,14 @@ ui <- fluidPage(
   titlePanel("my_photo_map — Mapa de Fotos"),
   sidebarLayout(
     sidebarPanel(
-      helpText("Coloque suas fotos na pasta 'photos/' (mesmo diretório do app)."),
-      helpText("As fotos devem ter dados EXIF de GPS. Miniaturas serão criadas automaticamente em www/thumbs."),
+      if(use_drive_mode){
+        helpText("Usando modo Drive: fotos carregadas de Google Drive via data/photo_metadata_drive.csv")
+      } else {
+        tagList(
+          helpText("Coloque suas fotos na pasta 'photos/' (mesmo diretório do app)."),
+          helpText("As fotos devem ter dados EXIF de GPS. Miniaturas serão criadas automaticamente em www/thumbs.")
+        )
+      },
       conditionalPanel(
         condition = "output.nPhotos > 0",
         verbatimTextOutput("summary")
