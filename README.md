@@ -1,68 +1,54 @@
-# my_photo_map
+# TLDR
 
-Shiny app para mapear fotos geolocalizadas (minhas viagens).
+This repository contains a lightweight R Shiny application that provides an interactive map interface for exploring geospatial data. The README below describes the project's objective and the general repository structure so you can quickly find where code, data, and deployment scripts live.
 
-Visão geral
-- Baixe/extraia seu álbum do Google Photos (recomendado: Google Takeout).
-- Coloque os arquivos de imagem extraídos em `photos/` no diretório do projeto (ex.: `my_photo_map/photos/`).
-- Execute o app Shiny localmente; ele irá extrair EXIF (GPS), criar miniaturas e mostrar as fotos num mapa (leaflet).
+---
 
-Instalação
-1. Instale dependências em R:
-```
-install.packages(c("shiny","leaflet","dplyr","htmltools","magick","exifr","readr"))
-```
-Observação: `exifr` depende do `exiftool` (normalmente instala/usa automaticamente). Se houver problemas, instale `exiftool` no seu sistema (ex.: `brew install exiftool` no macOS/Homebrew, `sudo apt install libimage-exiftool-perl` em Debian/Ubuntu).
+## Objective
 
-2. Estrutura esperada:
-- app.R
-- photos/                # coloque as fotos extraídas aqui (Download do Takeout) — em geral esta pasta é ignorada no git
-- data/                  # CSVs gerados com metadados (ex.: photo_metadata_drive.csv)
-- www/photos/            # gerado automaticamente (versões médias servidas pelo Shiny quando usar fotos locais)
-- www/thumbs/            # gerado automaticamente (miniaturas para popups)
-- scripts/               # scripts auxiliares (upload para Google Drive, extração de EXIF, etc.)
+Build a simple, maintainable Shiny app that displays geospatial datasets on an interactive map. The app's goals are:
 
-Como rodar
-```
-# no R
-shiny::runApp("path/to/my_photo_map")
-```
+- Visualize spatial data (points, polygons) on an interactive map.
+- Provide filters and basic controls for exploring datasets.
+- Be easy to run locally and straightforward to deploy (e.g., shinyapps.io or a container).
 
-Fluxo recomendado: Google Drive → CSV → app
+## Repository structure (general)
 
-Este projeto fornece um script que automatiza o upload das suas fotos (baixadas via Google Takeout) para uma pasta do Google Drive, torna os arquivos compartilháveis e gera um CSV com URLs públicas e metadados (lat, lon, datetime). O app Shiny foi atualizado para preferir esse CSV quando presente.
+- app.R or R/
+  - app.R (single-file Shiny app) or ui.R / server.R split for modularity.
+- R/
+  - Helper functions, modules, and data-processing scripts.
+- data/
+  - Raw and processed datasets (small sample datasets tracked here). Large data should be stored externally.
+- inst/ or www/
+  - Static assets (images, JavaScript, CSS) used by the app.
+- scripts/
+  - Utility scripts for data preparation, exports, or reproducible workflows.
+- docs/
+  - Optional documentation or generated site contents.
+- tests/
+  - Tests for core R functions (if applicable).
+- .github/
+  - CI workflows and automation configurations.
+- README.md
+  - This file: overview and basic instructions.
 
-Passos resumidos:
-1. Coloque suas fotos extraídas do Google Takeout em `photos/` (local).
-2. Execute o script que faz upload e gera o CSV:
-```
-# instale dependências do script (uma vez)
-install.packages(c("googledrive","exifr","dplyr","readr","purrr","fs","glue","tibble"))
+## Getting started (brief)
 
-# rode o script (abre o navegador para autenticação OAuth na primeira vez)
-Rscript scripts/upload_to_drive_and_index.R
-```
-Opções via variáveis de ambiente (opcional):
-- GDRIVE_FOLDER_ID — usar uma pasta Drive existente (ID) em vez de criar nova
-- GDRIVE_FOLDER_NAME — nome da pasta a criar (padrão: my_shiny_map_photos)
-- OVERWRITE=TRUE — sobrescrever arquivos com mesmo nome na pasta Drive
-- DRY_RUN=TRUE — fazer simulação sem upload
+1. Install R (version 4.x or newer recommended) and required packages. Typical packages include shiny, leaflet, sf, dplyr, and others used in the app.
 
-3. O script irá criar `data/photo_metadata_drive.csv` contendo colunas como: SourceFile, FileName, DriveId, DriveURL, lat, lon, DateTimeOriginal, Uploaded.
-4. Revise `data/photo_metadata_drive.csv`. Se estiver de acordo, commite-o no repositório (atenção à privacidade — o CSV contém URLs públicas se o script configurou compartilhamento):
-```
-git add data/photo_metadata_drive.csv
-git commit -m "Add photo metadata CSV from Google Drive"
-git push origin initial-scaffold
-```
-5. Rode o app Shiny: quando `data/photo_metadata_drive.csv` estiver presente, o app usará as URLs nela para exibir as imagens diretamente; caso contrário, o app usa o modo local (gera miniaturas em `www/thumbs/` e média em `www/photos/`).
+2. From an R session, run the app:
 
-Privacidade e avisos
-- O script por padrão chama `drive_share(..., type = "anyone")` para tornar as imagens acessíveis via link. NÃO comite o CSV em um repositório público se você não quer que suas fotos fiquem publicamente acessíveis.
-- Se preferir manter as fotos privadas, não execute `drive_share` ou use outra solução (bucket com URLs assinadas, servidor autenticado, ou manter fotos apenas localmente).
+- If app.R exists in the repo root:
+  - open app.R and click "Run App" in RStudio, or run: shiny::runApp(".")
 
-Alternativas
-- Se quiser versionar imagens no repositório, use Git LFS (recomendado apenas se compreender limites e custos) ou commit apenas algumas imagens de exemplo em `sample_photos/`.
-- Outra opção: fazer upload das miniaturas (thumbnails) para Drive no lugar das imagens originais, e apontar o CSV para thumbnails para reduzir largura de banda e tempo de carregamento do navegador.
+- If the app is in an R/ directory or uses a package structure, follow the repository-specific instructions in the project README or package vignette.
 
-Descrição do repositório (para o GitHub): Shiny app para mapear fotos geolocalizadas que tirei durante minhas viagens. O app suporta tanto fotos locais (pasta photos/) quanto um fluxo Drive→CSV para hospedar imagens externamente e manter o repositório leve.
+3. For deployment, consider building a Docker image or using shinyapps.io. Ensure any large datasets are accessible to the deployment environment.
+
+## Notes
+
+- Keep data under version control only if small. For larger datasets, reference external storage (S3, GCS, or a database).
+- Keep UI and server logic modular to simplify testing and future extensions.
+
+If you'd like, I can further tailor the README with exact file names from the repository or add step-by-step installation commands. 
