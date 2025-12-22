@@ -2,6 +2,7 @@ library(exifr)
 library(magick)
 library(dplyr)
 library(htmltools)
+library(jsonlite)
 
 # ---------------- Config ----------------
 photos_dir  <- "photos"
@@ -56,6 +57,31 @@ prepare_images <- function(files) {
   }))
 }
 
+
+# ---------------- read json ----------------
+read_google_geo <- function(image_path) {
+  json_path <- paste0(image_path, ".supplemental-metadata.json")
+  
+  if (!file.exists(json_path)) {
+    return(c(lat = NA_real_, lon = NA_real_))
+  }
+  
+  js <- tryCatch(
+    fromJSON(json_path),
+    error = function(e) NULL
+  )
+  
+  if (is.null(js) || is.null(js$geoData)) {
+    return(c(lat = NA_real_, lon = NA_real_))
+  }
+  
+  c(
+    lat = js$geoData$latitude,
+    lon = js$geoData$longitude
+  )
+}
+
+
 imgs_df <- prepare_images(img_files)
 
 # ---------------- EXIF ----------------
@@ -63,6 +89,34 @@ exif_df <- read_exif(
   imgs_df$SourceFile,
   tags = c("SourceFile", "GPSLatitude", "GPSLongitude", "DateTimeOriginal")
 )
+
+
+# garantir colunas
+if (!"GPSLatitude" %in% names(exif_df))  exif_df$GPSLatitude  <- NA_real_
+if (!"GPSLongitude" %in% names(exif_df)) exif_df$GPSLongitude <- NA_real_
+
+# identificar linhas sem GPS
+missing_gps <- is.na(exif_df$GPSLatitude) | is.na(exif_df$GPSLongitude)
+
+if (any(missing_gps)) {
+  
+  google_geo <- t(
+    sapply(
+      exif_df$SourceFile[missing_gps],
+      read_google_geo
+    )
+  )
+  
+  exif_df$GPSLatitude[missing_gps]  <- google_geo[, "lat"]
+  exif_df$GPSLongitude[missing_gps] <- google_geo[, "lon"]
+  
+  exif_df$gps_source <- "exif"
+  exif_df$gps_source[missing_gps & !is.na(google_geo[, "lat"])] <- "google_photos"
+  
+} else {
+  exif_df$gps_source <- "exif"
+}
+
 
 data <- imgs_df |>
   left_join(exif_df, by = "SourceFile") |>
@@ -80,7 +134,9 @@ data <- imgs_df |>
 
 # ---------------- Popup HTML ----------------
 
-data$id <- seq_len(nrow(data))
+data <- data |>
+  arrange(date) |>
+  mutate(id = row_number())
 
 data$popup_html <- paste0(
   ifelse(is.na(data$date), "", format(data$date, "%d/%m/%Y")),
