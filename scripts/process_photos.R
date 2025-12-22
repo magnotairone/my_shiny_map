@@ -3,6 +3,7 @@ library(magick)
 library(dplyr)
 library(htmltools)
 library(jsonlite)
+library(tidygeocoder)
 
 # ---------------- Config ----------------
 photos_dir  <- "photos"
@@ -118,7 +119,7 @@ if (any(missing_gps)) {
 }
 
 
-data <- imgs_df |>
+data0 <- imgs_df |>
   left_join(exif_df, by = "SourceFile") |>
   filter(!is.na(GPSLatitude), !is.na(GPSLongitude)) |>
   transmute(
@@ -132,6 +133,31 @@ data <- imgs_df |>
     medium_url
   )
 
+# ---------------- Add loc info ----------------
+
+df_geo <- data0 |>
+  reverse_geocode(
+    lat = lat,
+    long = lon,
+    method = "osm",
+    full_results = TRUE
+  )
+
+data <- df_geo |>
+  select(names(data0), city, state, country) |>
+  mutate(
+    local = if_else(
+      is.na(city) | city == "",
+      state,
+      city
+    ),
+    location = if_else(
+      country %in% c("Brazil", "Brasil"),
+      paste0(local, ", ", state),
+      paste0(local, ", ", country)
+    )
+  )
+
 # ---------------- Popup HTML ----------------
 
 data <- data |>
@@ -139,18 +165,32 @@ data <- data |>
   mutate(id = row_number())
 
 data$popup_html <- paste0(
-  ifelse(is.na(data$date), "", format(data$date, "%d/%m/%Y")),
-  "<br/>",
-  "<img src='", data$thumb_url,
-  "' width='120' style='border:1px solid #ccc'/><br/>",
+  "<div class='popup-card'>",
+  
+  "<div class='popup-meta'>",
+  "📍 ", data$location, "<br/>",
+  "📅 ", format(data$date, "%d/%m/%Y"),
+  "</div>",
+  
+  "<div class='popup-image'>",
+  "<img src='", data$thumb_url, "' />",
+  "</div>",
+  
+  "<div class='popup-link'>",
   "<a href='#' onclick=\"Shiny.setInputValue(
-      'open_photo', ",
-  data$id,
-  ", {priority: 'event'}
-    ); return false;\">Ampliar imagem</a>"
+        'open_photo', ", data$id, ",
+        {priority: 'event'}
+      ); return false;\">🔍 Ampliar imagem</a>",
+  "</div>",
+  
+  "</div>"
 )
+
 
 # ---------------- Save ----------------
 saveRDS(data, data_out)
+data <- readRDS("data/photos_data.rds")
+save(data, file = "data/data.RData")
+
 
 cat("✔ Processamento concluído:", nrow(data), "fotos\n")

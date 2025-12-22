@@ -9,8 +9,7 @@
 .idea/
 .DS_Store
 /photos/*
-/www/photos/*
-/www/thumbs/*
+
 .Rproj.user
 .Rhistory
 .RData
