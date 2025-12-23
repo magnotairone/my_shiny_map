@@ -1,0 +1,33 @@
+{
+  "title": "IMG_6163.JPG",
+  "description": "",
+  "imageViews": "0",
+  "creationTime": {
+    "timestamp": "1766436999",
+    "formatted": "22 de dez. de 2025, 20:56:39 UTC"
+  },
+  "photoTakenTime": {
+    "timestamp": "1468858643",
+    "formatted": "18 de jul. de 2016, 16:17:23 UTC"
+  },
+  "geoData": {
+    "latitude": -34.4729528,
+    "longitude": -57.8511722,
+    "altitude": 13.257446808510638,
+    "latitudeSpan": 0.0,
+    "longitudeSpan": 0.0
+  },
+  "geoDataExif": {
+    "latitude": -34.4729528,
+    "longitude": -57.8511722,
+    "altitude": 13.257446808510638,
+    "latitudeSpan": 0.0,
+    "longitudeSpan": 0.0
+  },
+  "url": "https://photos.google.com/photo/AF1QipNL_7hS4qUgx6xMUPRYaaNZyUZ0_bQhvSWPDKxh",
+  "googlePhotosOrigin": {
+    "mobileUpload": {
+      "deviceType": "IOS_PHONE"
+    }
+  }
+}

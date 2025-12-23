@@ -1,0 +1,39 @@
+{
+  "title": "20250303_123236.jpg",
+  "description": "",
+  "imageViews": "0",
+  "creationTime": {
+    "timestamp": "1766509160",
+    "formatted": "23 de dez. de 2025, 16:59:20 UTC"
+  },
+  "photoTakenTime": {
+    "timestamp": "1741015956",
+    "formatted": "3 de mar. de 2025, 15:32:36 UTC"
+  },
+  "geoData": {
+    "latitude": -22.6891548,
+    "longitude": -45.7309433,
+    "altitude": 901.0,
+    "latitudeSpan": 0.0,
+    "longitudeSpan": 0.0
+  },
+  "geoDataExif": {
+    "latitude": -22.6891548,
+    "longitude": -45.7309433,
+    "altitude": 901.0,
+    "latitudeSpan": 0.0,
+    "longitudeSpan": 0.0
+  },
+  "url": "https://photos.google.com/photo/AF1QipNpM0xWWzBqzrboBs2ncnnpkdVHdCdplY7c09ew",
+  "googlePhotosOrigin": {
+    "mobileUpload": {
+      "deviceFolder": {
+        "localFolderName": ""
+      },
+      "deviceType": "ANDROID_PHONE"
+    }
+  },
+  "appSource": {
+    "androidPackageName": "com.sec.android.app.camera"
+  }
+}

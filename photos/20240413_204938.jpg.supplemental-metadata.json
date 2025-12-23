@@ -1,0 +1,36 @@
+{
+  "title": "20240413_204938.jpg",
+  "description": "",
+  "imageViews": "2",
+  "creationTime": {
+    "timestamp": "1766343480",
+    "formatted": "21 de dez. de 2025, 18:58:00 UTC"
+  },
+  "photoTakenTime": {
+    "timestamp": "1713052178",
+    "formatted": "13 de abr. de 2024, 23:49:38 UTC"
+  },
+  "geoData": {
+    "latitude": -22.966420799999998,
+    "longitude": -43.1872672,
+    "altitude": 0.0,
+    "latitudeSpan": 0.0,
+    "longitudeSpan": 0.0
+  },
+  "geoDataExif": {
+    "latitude": -22.966420799999998,
+    "longitude": -43.1872672,
+    "altitude": 0.0,
+    "latitudeSpan": 0.0,
+    "longitudeSpan": 0.0
+  },
+  "url": "https://photos.google.com/photo/AF1QipPrmdpO6YXOh1SsHVFlb29rknpH6DuLOQEsfELH",
+  "googlePhotosOrigin": {
+    "mobileUpload": {
+      "deviceFolder": {
+        "localFolderName": ""
+      },
+      "deviceType": "ANDROID_PHONE"
+    }
+  }
+}

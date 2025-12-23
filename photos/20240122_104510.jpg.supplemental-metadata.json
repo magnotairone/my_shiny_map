@@ -1,0 +1,36 @@
+{
+  "title": "20240122_104510.jpg",
+  "description": "",
+  "imageViews": "0",
+  "creationTime": {
+    "timestamp": "1766508848",
+    "formatted": "23 de dez. de 2025, 16:54:08 UTC"
+  },
+  "photoTakenTime": {
+    "timestamp": "1705931110",
+    "formatted": "22 de jan. de 2024, 13:45:10 UTC"
+  },
+  "geoData": {
+    "latitude": -33.0412704,
+    "longitude": -71.6262272,
+    "altitude": 0.0,
+    "latitudeSpan": 0.0,
+    "longitudeSpan": 0.0
+  },
+  "geoDataExif": {
+    "latitude": -33.0412704,
+    "longitude": -71.6262272,
+    "altitude": 0.0,
+    "latitudeSpan": 0.0,
+    "longitudeSpan": 0.0
+  },
+  "url": "https://photos.google.com/photo/AF1QipMopmr98j9-_zbGPr58ft3Qnf6giQ5jBAoUcuQQ",
+  "googlePhotosOrigin": {
+    "mobileUpload": {
+      "deviceFolder": {
+        "localFolderName": ""
+      },
+      "deviceType": "ANDROID_PHONE"
+    }
+  }
+}

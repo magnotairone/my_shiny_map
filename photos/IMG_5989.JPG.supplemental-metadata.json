@@ -1,0 +1,33 @@
+{
+  "title": "IMG_5989.JPG",
+  "description": "",
+  "imageViews": "0",
+  "creationTime": {
+    "timestamp": "1766437121",
+    "formatted": "22 de dez. de 2025, 20:58:41 UTC"
+  },
+  "photoTakenTime": {
+    "timestamp": "1468455434",
+    "formatted": "14 de jul. de 2016, 00:17:14 UTC"
+  },
+  "geoData": {
+    "latitude": -25.2909722,
+    "longitude": -57.637472200000005,
+    "altitude": 0.0,
+    "latitudeSpan": 0.0,
+    "longitudeSpan": 0.0
+  },
+  "geoDataExif": {
+    "latitude": -25.2909722,
+    "longitude": -57.637472200000005,
+    "altitude": 0.0,
+    "latitudeSpan": 0.0,
+    "longitudeSpan": 0.0
+  },
+  "url": "https://photos.google.com/photo/AF1QipNH20dupjX_wlNOSANh23QqUEoTicrKpBySsE7O",
+  "googlePhotosOrigin": {
+    "mobileUpload": {
+      "deviceType": "IOS_PHONE"
+    }
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "title": "20221217_133516.jpg",
+  "description": "",
+  "imageViews": "2",
+  "creationTime": {
+    "timestamp": "1766343106",
+    "formatted": "21 de dez. de 2025, 18:51:46 UTC"
+  },
+  "photoTakenTime": {
+    "timestamp": "1671294916",
+    "formatted": "17 de dez. de 2022, 16:35:16 UTC"
+  },
+  "geoData": {
+    "latitude": -34.608239,
+    "longitude": -58.3722886,
+    "altitude": 44.0,
+    "latitudeSpan": 0.0,
+    "longitudeSpan": 0.0
+  },
+  "geoDataExif": {
+    "latitude": -34.608239,
+    "longitude": -58.3722886,
+    "altitude": 44.0,
+    "latitudeSpan": 0.0,
+    "longitudeSpan": 0.0
+  },
+  "url": "https://photos.google.com/photo/AF1QipN2lM4BjrMcdctV-B3iboBNt9jndg-llJTTZmje",
+  "googlePhotosOrigin": {
+    "mobileUpload": {
+      "deviceFolder": {
+        "localFolderName": ""
+      },
+      "deviceType": "ANDROID_PHONE"
+    }
+  }
+}

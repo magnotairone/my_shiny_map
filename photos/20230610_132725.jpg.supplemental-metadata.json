@@ -1,0 +1,36 @@
+{
+  "title": "20230610_132725.jpg",
+  "description": "",
+  "imageViews": "0",
+  "creationTime": {
+    "timestamp": "1766509338",
+    "formatted": "23 de dez. de 2025, 17:02:18 UTC"
+  },
+  "photoTakenTime": {
+    "timestamp": "1686414445",
+    "formatted": "10 de jun. de 2023, 16:27:25 UTC"
+  },
+  "geoData": {
+    "latitude": -23.5352325,
+    "longitude": -46.635024699999995,
+    "altitude": 740.0,
+    "latitudeSpan": 0.0,
+    "longitudeSpan": 0.0
+  },
+  "geoDataExif": {
+    "latitude": -23.5352325,
+    "longitude": -46.635024699999995,
+    "altitude": 740.0,
+    "latitudeSpan": 0.0,
+    "longitudeSpan": 0.0
+  },
+  "url": "https://photos.google.com/photo/AF1QipPGDB8pp1ARP9kKlHX2OrHsC1yWpszRUS8bj2iI",
+  "googlePhotosOrigin": {
+    "mobileUpload": {
+      "deviceFolder": {
+        "localFolderName": ""
+      },
+      "deviceType": "ANDROID_PHONE"
+    }
+  }
+}

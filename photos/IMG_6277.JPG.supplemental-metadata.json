@@ -1,0 +1,33 @@
+{
+  "title": "IMG_6277.JPG",
+  "description": "",
+  "imageViews": "0",
+  "creationTime": {
+    "timestamp": "1766436893",
+    "formatted": "22 de dez. de 2025, 20:54:53 UTC"
+  },
+  "photoTakenTime": {
+    "timestamp": "1469206858",
+    "formatted": "22 de jul. de 2016, 17:00:58 UTC"
+  },
+  "geoData": {
+    "latitude": -31.770330599999998,
+    "longitude": -52.342608299999995,
+    "altitude": -0.49664304364043266,
+    "latitudeSpan": 0.0,
+    "longitudeSpan": 0.0
+  },
+  "geoDataExif": {
+    "latitude": -31.770330599999998,
+    "longitude": -52.342608299999995,
+    "altitude": -0.49664304364043266,
+    "latitudeSpan": 0.0,
+    "longitudeSpan": 0.0
+  },
+  "url": "https://photos.google.com/photo/AF1QipOWwDfplaNJYXEP2Hu-9kX5-7cI66UCb0ox7Rc5",
+  "googlePhotosOrigin": {
+    "mobileUpload": {
+      "deviceType": "IOS_PHONE"
+    }
+  }
+}

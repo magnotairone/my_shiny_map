@@ -1,0 +1,36 @@
+{
+  "title": "20240707_131405.jpg",
+  "description": "",
+  "imageViews": "4",
+  "creationTime": {
+    "timestamp": "1766343378",
+    "formatted": "21 de dez. de 2025, 18:56:18 UTC"
+  },
+  "photoTakenTime": {
+    "timestamp": "1720372445",
+    "formatted": "7 de jul. de 2024, 17:14:05 UTC"
+  },
+  "geoData": {
+    "latitude": -32.8563512,
+    "longitude": -70.1421986,
+    "altitude": 2550.0,
+    "latitudeSpan": 0.0,
+    "longitudeSpan": 0.0
+  },
+  "geoDataExif": {
+    "latitude": -32.8563512,
+    "longitude": -70.1421986,
+    "altitude": 2550.0,
+    "latitudeSpan": 0.0,
+    "longitudeSpan": 0.0
+  },
+  "url": "https://photos.google.com/photo/AF1QipPY_Gi7by9QP8Uac7RX8-zTeFycE_tYf1dmsbmi",
+  "googlePhotosOrigin": {
+    "mobileUpload": {
+      "deviceFolder": {
+        "localFolderName": ""
+      },
+      "deviceType": "ANDROID_PHONE"
+    }
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "title": "20231013_102905.jpg",
+  "description": "",
+  "imageViews": "5",
+  "creationTime": {
+    "timestamp": "1766343296",
+    "formatted": "21 de dez. de 2025, 18:54:56 UTC"
+  },
+  "photoTakenTime": {
+    "timestamp": "1697210945",
+    "formatted": "13 de out. de 2023, 15:29:05 UTC"
+  },
+  "geoData": {
+    "latitude": -12.1491677,
+    "longitude": -77.0224887,
+    "altitude": 87.769,
+    "latitudeSpan": 0.0,
+    "longitudeSpan": 0.0
+  },
+  "geoDataExif": {
+    "latitude": -12.1491677,
+    "longitude": -77.0224887,
+    "altitude": 87.769,
+    "latitudeSpan": 0.0,
+    "longitudeSpan": 0.0
+  },
+  "url": "https://photos.google.com/photo/AF1QipMrypW6iZozxTPSy3Qn5cdLZsFWchIi8WpFIuJG",
+  "googlePhotosOrigin": {
+    "mobileUpload": {
+      "deviceFolder": {
+        "localFolderName": ""
+      },
+      "deviceType": "ANDROID_PHONE"
+    }
+  }
+}

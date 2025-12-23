@@ -1,0 +1,36 @@
+{
+  "title": "IMG_20190102_184436.jpg",
+  "description": "",
+  "imageViews": "0",
+  "creationTime": {
+    "timestamp": "1766437382",
+    "formatted": "22 de dez. de 2025, 21:03:02 UTC"
+  },
+  "photoTakenTime": {
+    "timestamp": "1546465476",
+    "formatted": "2 de jan. de 2019, 21:44:36 UTC"
+  },
+  "geoData": {
+    "latitude": -32.7842517,
+    "longitude": -69.62314839999999,
+    "altitude": 2241.151,
+    "latitudeSpan": 0.0,
+    "longitudeSpan": 0.0
+  },
+  "geoDataExif": {
+    "latitude": -32.7842517,
+    "longitude": -69.62314839999999,
+    "altitude": 2241.151,
+    "latitudeSpan": 0.0,
+    "longitudeSpan": 0.0
+  },
+  "url": "https://photos.google.com/photo/AF1QipNfTvu1v92g-9G3Mqsg0rVQVo1U6ccgjg4ILvwU",
+  "googlePhotosOrigin": {
+    "mobileUpload": {
+      "deviceFolder": {
+        "localFolderName": ""
+      },
+      "deviceType": "ANDROID_PHONE"
+    }
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "title": "20240124_150949.jpg",
+  "description": "",
+  "imageViews": "3",
+  "creationTime": {
+    "timestamp": "1766343410",
+    "formatted": "21 de dez. de 2025, 18:56:50 UTC"
+  },
+  "photoTakenTime": {
+    "timestamp": "1706119789",
+    "formatted": "24 de jan. de 2024, 18:09:49 UTC"
+  },
+  "geoData": {
+    "latitude": -33.4909184,
+    "longitude": -70.5481344,
+    "altitude": 0.0,
+    "latitudeSpan": 0.0,
+    "longitudeSpan": 0.0
+  },
+  "geoDataExif": {
+    "latitude": -33.4909184,
+    "longitude": -70.5481344,
+    "altitude": 0.0,
+    "latitudeSpan": 0.0,
+    "longitudeSpan": 0.0
+  },
+  "url": "https://photos.google.com/photo/AF1QipNVgw9Hh37aVNtij7yPjzAdxvp1SaOQwjyHbR6k",
+  "googlePhotosOrigin": {
+    "mobileUpload": {
+      "deviceFolder": {
+        "localFolderName": ""
+      },
+      "deviceType": "ANDROID_PHONE"
+    }
+  }
+}

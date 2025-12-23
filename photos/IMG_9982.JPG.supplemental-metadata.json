@@ -1,0 +1,33 @@
+{
+  "title": "IMG_9982.JPG",
+  "description": "",
+  "imageViews": "0",
+  "creationTime": {
+    "timestamp": "1766437263",
+    "formatted": "22 de dez. de 2025, 21:01:03 UTC"
+  },
+  "photoTakenTime": {
+    "timestamp": "1516119541",
+    "formatted": "16 de jan. de 2018, 16:19:01 UTC"
+  },
+  "geoData": {
+    "latitude": -27.053488899999998,
+    "longitude": -48.5874056,
+    "altitude": -7.889103182256509,
+    "latitudeSpan": 0.0,
+    "longitudeSpan": 0.0
+  },
+  "geoDataExif": {
+    "latitude": -27.053488899999998,
+    "longitude": -48.5874056,
+    "altitude": -7.889103182256509,
+    "latitudeSpan": 0.0,
+    "longitudeSpan": 0.0
+  },
+  "url": "https://photos.google.com/photo/AF1QipNT2qFAxiiXe7na_4nlJ1hIiG0xy4yx9aPrsdOy",
+  "googlePhotosOrigin": {
+    "mobileUpload": {
+      "deviceType": "IOS_PHONE"
+    }
+  }
+}

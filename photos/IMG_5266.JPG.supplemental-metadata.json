@@ -1,0 +1,33 @@
+{
+  "title": "IMG_5266.JPG",
+  "description": "",
+  "imageViews": "0",
+  "creationTime": {
+    "timestamp": "1766509050",
+    "formatted": "23 de dez. de 2025, 16:57:30 UTC"
+  },
+  "photoTakenTime": {
+    "timestamp": "1456678163",
+    "formatted": "28 de fev. de 2016, 16:49:23 UTC"
+  },
+  "geoData": {
+    "latitude": -21.1099694,
+    "longitude": -44.178091699999996,
+    "altitude": 936.8125,
+    "latitudeSpan": 0.0,
+    "longitudeSpan": 0.0
+  },
+  "geoDataExif": {
+    "latitude": -21.1099694,
+    "longitude": -44.178091699999996,
+    "altitude": 936.8125,
+    "latitudeSpan": 0.0,
+    "longitudeSpan": 0.0
+  },
+  "url": "https://photos.google.com/photo/AF1QipN8hOKg7JTIBo0K_St0O8Jv5Zl_778U8DW8ttaE",
+  "googlePhotosOrigin": {
+    "mobileUpload": {
+      "deviceType": "IOS_PHONE"
+    }
+  }
+}

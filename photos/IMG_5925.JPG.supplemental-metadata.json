@@ -1,0 +1,33 @@
+{
+  "title": "IMG_5925.JPG",
+  "description": "",
+  "imageViews": "0",
+  "creationTime": {
+    "timestamp": "1766437151",
+    "formatted": "22 de dez. de 2025, 20:59:11 UTC"
+  },
+  "photoTakenTime": {
+    "timestamp": "1468253959",
+    "formatted": "11 de jul. de 2016, 16:19:19 UTC"
+  },
+  "geoData": {
+    "latitude": -25.6957278,
+    "longitude": -54.4371861,
+    "altitude": 212.97931034482758,
+    "latitudeSpan": 0.0,
+    "longitudeSpan": 0.0
+  },
+  "geoDataExif": {
+    "latitude": -25.6957278,
+    "longitude": -54.4371861,
+    "altitude": 212.97931034482758,
+    "latitudeSpan": 0.0,
+    "longitudeSpan": 0.0
+  },
+  "url": "https://photos.google.com/photo/AF1QipOcSa_TNof_Ua6W6ybJT5UOOulGULasIm4NKN0z",
+  "googlePhotosOrigin": {
+    "mobileUpload": {
+      "deviceType": "IOS_PHONE"
+    }
+  }
+}

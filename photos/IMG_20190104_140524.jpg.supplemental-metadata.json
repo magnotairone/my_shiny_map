@@ -1,0 +1,36 @@
+{
+  "title": "IMG_20190104_140524.jpg",
+  "description": "",
+  "imageViews": "0",
+  "creationTime": {
+    "timestamp": "1766437456",
+    "formatted": "22 de dez. de 2025, 21:04:16 UTC"
+  },
+  "photoTakenTime": {
+    "timestamp": "1546621524",
+    "formatted": "4 de jan. de 2019, 17:05:24 UTC"
+  },
+  "geoData": {
+    "latitude": -32.8918052,
+    "longitude": -68.85747649999999,
+    "altitude": 815.469,
+    "latitudeSpan": 0.0,
+    "longitudeSpan": 0.0
+  },
+  "geoDataExif": {
+    "latitude": -32.8918052,
+    "longitude": -68.85747649999999,
+    "altitude": 815.469,
+    "latitudeSpan": 0.0,
+    "longitudeSpan": 0.0
+  },
+  "url": "https://photos.google.com/photo/AF1QipM8rKGt4uK6eRBQrzAGJvZlVFlUqxh77eiUr3h_",
+  "googlePhotosOrigin": {
+    "mobileUpload": {
+      "deviceFolder": {
+        "localFolderName": ""
+      },
+      "deviceType": "ANDROID_PHONE"
+    }
+  }
+}

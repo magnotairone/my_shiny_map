@@ -1,0 +1,36 @@
+{
+  "title": "20230805_092254.jpg",
+  "description": "",
+  "imageViews": "7",
+  "creationTime": {
+    "timestamp": "1766343216",
+    "formatted": "21 de dez. de 2025, 18:53:36 UTC"
+  },
+  "photoTakenTime": {
+    "timestamp": "1691245374",
+    "formatted": "5 de ago. de 2023, 14:22:54 UTC"
+  },
+  "geoData": {
+    "latitude": 10.423194200000001,
+    "longitude": -75.5522979,
+    "altitude": -13.0,
+    "latitudeSpan": 0.0,
+    "longitudeSpan": 0.0
+  },
+  "geoDataExif": {
+    "latitude": 10.423194200000001,
+    "longitude": -75.5522979,
+    "altitude": -13.0,
+    "latitudeSpan": 0.0,
+    "longitudeSpan": 0.0
+  },
+  "url": "https://photos.google.com/photo/AF1QipPWMqbvyDCkE1W0YuvaRx1Y-_MtZ3BbtQG9O3rf",
+  "googlePhotosOrigin": {
+    "mobileUpload": {
+      "deviceFolder": {
+        "localFolderName": ""
+      },
+      "deviceType": "ANDROID_PHONE"
+    }
+  }
+}

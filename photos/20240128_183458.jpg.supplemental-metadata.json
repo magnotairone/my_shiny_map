@@ -1,0 +1,36 @@
+{
+  "title": "20240128_183458.jpg",
+  "description": "",
+  "imageViews": "4",
+  "creationTime": {
+    "timestamp": "1766343378",
+    "formatted": "21 de dez. de 2025, 18:56:18 UTC"
+  },
+  "photoTakenTime": {
+    "timestamp": "1706477698",
+    "formatted": "28 de jan. de 2024, 21:34:58 UTC"
+  },
+  "geoData": {
+    "latitude": -41.2242521,
+    "longitude": -72.6497045,
+    "altitude": 96.0,
+    "latitudeSpan": 0.0,
+    "longitudeSpan": 0.0
+  },
+  "geoDataExif": {
+    "latitude": -41.2242521,
+    "longitude": -72.6497045,
+    "altitude": 96.0,
+    "latitudeSpan": 0.0,
+    "longitudeSpan": 0.0
+  },
+  "url": "https://photos.google.com/photo/AF1QipP-lHQHzUqOpwqdG7MZevSLzm9k9fCVGOdnhMvk",
+  "googlePhotosOrigin": {
+    "mobileUpload": {
+      "deviceFolder": {
+        "localFolderName": ""
+      },
+      "deviceType": "ANDROID_PHONE"
+    }
+  }
+}

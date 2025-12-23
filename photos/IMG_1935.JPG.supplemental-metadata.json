@@ -1,0 +1,33 @@
+{
+  "title": "IMG_1935.JPG",
+  "description": "",
+  "imageViews": "0",
+  "creationTime": {
+    "timestamp": "1766509001",
+    "formatted": "23 de dez. de 2025, 16:56:41 UTC"
+  },
+  "photoTakenTime": {
+    "timestamp": "1535902123",
+    "formatted": "2 de set. de 2018, 15:28:43 UTC"
+  },
+  "geoData": {
+    "latitude": -20.384752799999998,
+    "longitude": -43.5036389,
+    "altitude": 1146.246153846154,
+    "latitudeSpan": 0.0,
+    "longitudeSpan": 0.0
+  },
+  "geoDataExif": {
+    "latitude": -20.384752799999998,
+    "longitude": -43.5036389,
+    "altitude": 1146.246153846154,
+    "latitudeSpan": 0.0,
+    "longitudeSpan": 0.0
+  },
+  "url": "https://photos.google.com/photo/AF1QipObTsIxtqAJmSZQDRO3ksXss-XxnOoD3nQpDs2K",
+  "googlePhotosOrigin": {
+    "mobileUpload": {
+      "deviceType": "IOS_PHONE"
+    }
+  }
+}
