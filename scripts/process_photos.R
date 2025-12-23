@@ -29,34 +29,55 @@ img_files <- list.files(
 
 stopifnot(length(img_files) > 0)
 
-# ---------------- Prepare images ----------------
+# ---------------- Prepare images (loop) ----------------
 prepare_images <- function(files) {
-  bind_rows(lapply(files, function(f) {
+  
+  # pré-aloca lista (muito mais eficiente que crescer dinamicamente)
+  out <- vector("list", length(files))
+  
+  for (i in seq_along(files)) {
     
+    f <- files[i]
     base <- basename(f)
+    
     thumb_path  <- file.path(www_thumbs, base)
     medium_path <- file.path(www_photos, base)
     
+    # ---- Thumbnail ----
     if (!file.exists(thumb_path)) {
-      image_read(f) |>
-        image_scale(thumb_width) |>
-        image_write(thumb_path)
+      try({
+        image_read(f) |>
+          image_scale(thumb_width) |>
+          image_write(thumb_path)
+      }, silent = TRUE)
     }
     
+    # ---- Imagem média ----
     if (!file.exists(medium_path)) {
-      image_read(f) |>
-        image_scale(medium_max) |>
-        image_write(medium_path)
+      try({
+        image_read(f) |>
+          image_scale(medium_max) |>
+          image_write(medium_path)
+      }, silent = TRUE)
     }
     
-    tibble(
+    # ---- Resultado da imagem i ----
+    out[[i]] <- tibble(
       SourceFile = f,
       FileName   = base,
       thumb_url  = paste0("thumbs/", base),
       medium_url = paste0("photos/", base)
     )
-  }))
+    
+    # (opcional) progresso simples
+    if (i %% 50 == 0) {
+      message(sprintf("Processadas %d / %d imagens", i, length(files)))
+    }
+  }
+  
+  bind_rows(out)
 }
+
 
 
 # ---------------- read json ----------------
@@ -194,3 +215,21 @@ save(data, file = "data/data.RData")
 
 
 cat("✔ Processamento concluído:", nrow(data), "fotos\n")
+
+
+rm(data0, df_geo, exif_df, google_geo, imgs_df, missing_gps)
+
+# Falta no photos:
+# Milao
+# Hamburgo
+# Napole
+# Ismir
+# Riiga
+# Blue Lagoon Islancia
+# Montevideo
+
+# Araxa
+# Santos
+# Guarapari
+# Florianopolis
+# Lapinha da Serra

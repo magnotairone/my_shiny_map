@@ -10,11 +10,17 @@ library(leaflet.extras)
 # data <- readRDS("data/photos_data.rds")
 load("data/data.RData")
 
+# data <- data |> 
+#   filter(lat != 0, lon != 0) |> 
+#   arrange(date) |>
+#   mutate(id = row_number())
+
 # data <- data[order(data$date), ]
 # data$id <- seq_len(nrow(data))
 data$time_num <- as.numeric(data$date)
 
 n_photos <- nrow(data)
+print(n_photos)
 
 initial_view <- list(lng = 0, lat = 20, zoom = 2)
 
@@ -262,7 +268,35 @@ ui <- fluidPage(
           Shiny.setInputValue('key_prev', Date.now(), {priority: 'event'});
         }
       });
-    "))
+    ")),
+    
+    tags$link(
+      rel = "icon",
+      type = "image/png",
+      href = "favicon.png"
+    ),
+    
+    tags$title("Meu Mapa de Fotos"),
+    
+    tags$meta(
+      name = "description",
+      content = "Mapa interativo com fotos de viagens, usando geolocalização EXIF e visualização em mapa."
+    ),
+    
+    tags$meta(
+      name = "author",
+      content = "Magno Severino"
+    ),
+    
+    tags$meta(
+      name = "keywords",
+      content = "mapa de fotos, viagens, leaflet, shiny, R, geolocalização"
+    ),
+    
+    tags$meta(
+      name = "viewport",
+      content = "width=device-width, initial-scale=1"
+    ),
   ),
   
   fluidRow(
@@ -304,7 +338,6 @@ ui <- fluidPage(
 server <- function(input, output, session) {
   
   selected_photo <- reactiveVal(NULL)
-  print(selected_photo)
   
   # ---- MAPA ----
   output$map <- renderLeaflet({
@@ -334,7 +367,8 @@ server <- function(input, output, session) {
   # ---- Centralizar mapa ao mudar foto ----
   observeEvent(selected_photo(), {
     req(selected_photo())
-    
+    print(selected_photo())
+    print(data$id)
     row <- data[data$id == selected_photo(), ]
     leafletProxy("map") |>
       flyTo(row$lon, row$lat, zoom = 6)
