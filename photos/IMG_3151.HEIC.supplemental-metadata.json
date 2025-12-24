@@ -1,0 +1,32 @@
+{
+  "title": "IMG_3151.HEIC",
+  "description": "",
+  "imageViews": "0",
+  "creationTime": {
+    "timestamp": "1766595754",
+    "formatted": "24 de dez. de 2025, 17:02:34 UTC"
+  },
+  "photoTakenTime": {
+    "timestamp": "1731768035",
+    "formatted": "16 de nov. de 2024, 14:40:35 UTC"
+  },
+  "geoData": {
+    "latitude": 40.7787389,
+    "longitude": -73.97165,
+    "altitude": 27.46776201145133,
+    "latitudeSpan": 0.0,
+    "longitudeSpan": 0.0
+  },
+  "geoDataExif": {
+    "latitude": 40.7787389,
+    "longitude": -73.97165,
+    "altitude": 27.46776201145133,
+    "latitudeSpan": 0.0,
+    "longitudeSpan": 0.0
+  },
+  "url": "https://photos.google.com/photo/AF1QipO4lnt1DhzVPW1-t9qOQGTGhQMpib2Dr8filKWk",
+  "googlePhotosOrigin": {
+    "fromSharedAlbum": {
+    }
+  }
+}

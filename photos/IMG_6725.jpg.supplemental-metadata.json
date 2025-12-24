@@ -1,0 +1,33 @@
+{
+  "title": "IMG_6725.jpg",
+  "description": "",
+  "imageViews": "1",
+  "creationTime": {
+    "timestamp": "1766343756",
+    "formatted": "21 de dez. de 2025, 19:02:36 UTC"
+  },
+  "photoTakenTime": {
+    "timestamp": "1651406934",
+    "formatted": "1 de mai. de 2022, 12:08:54 UTC"
+  },
+  "geoData": {
+    "latitude": 45.4385428,
+    "longitude": 10.99183,
+    "altitude": 0.0,
+    "latitudeSpan": 0.0,
+    "longitudeSpan": 0.0
+  },
+  "geoDataExif": {
+    "latitude": 45.4385428,
+    "longitude": 10.99183,
+    "altitude": 0.0,
+    "latitudeSpan": 0.0,
+    "longitudeSpan": 0.0
+  },
+  "url": "https://photos.google.com/search/CgZ2ZXJvbmEiCAoGdmVyb25hKOSowIi1MzgD/photo/AF1QipPZNfkDSt3Fg-1BbRXiF3SBxihPx6qJiDA2VilV",
+  "googlePhotosOrigin": {
+    "mobileUpload": {
+      "deviceType": "IOS_PHONE"
+    }
+  }
+}

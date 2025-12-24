@@ -1,0 +1,33 @@
+{
+  "title": "IMG_7278.JPG",
+  "description": "",
+  "imageViews": "0",
+  "creationTime": {
+    "timestamp": "1766595629",
+    "formatted": "24 de dez. de 2025, 17:00:29 UTC"
+  },
+  "photoTakenTime": {
+    "timestamp": "1484682018",
+    "formatted": "17 de jan. de 2017, 19:40:18 UTC"
+  },
+  "geoData": {
+    "latitude": -20.099761100000002,
+    "longitude": -42.1482917,
+    "altitude": 900.3936170212766,
+    "latitudeSpan": 0.0,
+    "longitudeSpan": 0.0
+  },
+  "geoDataExif": {
+    "latitude": -20.099761100000002,
+    "longitude": -42.1482917,
+    "altitude": 900.3936170212766,
+    "latitudeSpan": 0.0,
+    "longitudeSpan": 0.0
+  },
+  "url": "https://photos.google.com/photo/AF1QipMW1zmBKe2AbL4-pKzLd8A4p1vFanabdS9SUKyl",
+  "googlePhotosOrigin": {
+    "mobileUpload": {
+      "deviceType": "IOS_PHONE"
+    }
+  }
+}

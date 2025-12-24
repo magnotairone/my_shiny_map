@@ -156,28 +156,220 @@ data0 <- imgs_df |>
 
 # ---------------- Add loc info ----------------
 
-df_geo <- data0 |>
+# df_geo <- data0 |>
+#   reverse_geocode(
+#     lat = lat,
+#     long = lon,
+#     method = "osm",
+#     full_results = FALSE
+#   )
+
+library(purrr)
+
+df_geo <- map_dfr(seq_len(nrow(data0)), function(i) {
+  Sys.sleep(1.2)  # respeita o limite do OSM
+  
   reverse_geocode(
+    data0[i, ],
     lat = lat,
     long = lon,
     method = "osm",
     full_results = TRUE
   )
+})
+
+
+# ---- Normalizar paises
+
+library(stringr)
+library(dplyr)
+
+normalize_country <- function(country_raw) {
+  
+  country_clean <- str_trim(country_raw)
+  
+  case_when(
+    
+    # ----------------------------
+    # Reino Unido / Irlanda
+    # ----------------------------
+    country_clean == "United Kingdom" ~ "Reino Unido",
+    country_clean %in% c("Éire / Ireland", "Ireland", "Éire") ~ "Irlanda",
+    
+    # ----------------------------
+    # Europa Ocidental / Central
+    # ----------------------------
+    country_clean == "France" ~ "França",
+    country_clean %in% c("Deutschland") ~ "Alemanha",
+    country_clean %in% c("Österreich") ~ "Áustria",
+    country_clean %in% c("Schweiz/Suisse/Svizzera/Svizra") ~ "Suíça",
+    country_clean %in% c("België / Belgique / Belgien") ~ "Bélgica",
+    country_clean %in% c("Italia") ~ "Itália",
+    country_clean %in% c("Danmark") ~ "Dinamarca",
+    country_clean %in% c("Sverige") ~ "Suécia",
+    country_clean %in% c("Ísland") ~ "Islândia",
+    
+    # ----------------------------
+    # Europa Central / Oriental
+    # ----------------------------
+    country_clean %in% c("Magyarország") ~ "Hungria",
+    country_clean %in% c("Česko") ~ "República Tcheca",
+    country_clean %in% c("Slovensko") ~ "Eslováquia",
+    country_clean %in% c("Polska") ~ "Polônia",
+    country_clean %in% c("Eesti") ~ "Estônia",
+    country_clean %in% c("Latvija") ~ "Letônia",
+    country_clean %in% c("Malta") ~ "Malta",
+    
+    # ----------------------------
+    # Sul / Leste da Europa
+    # ----------------------------
+    country_clean %in% c("Ελλάς", "Ελλάδα") ~ "Grécia",
+    country_clean %in% c("Türkiye") ~ "Turquia",
+    country_clean %in% c("Россия") ~ "Rússia",
+    
+    # ----------------------------
+    # Américas
+    # ----------------------------
+    country_clean %in% c("Brasil", "Brazil") ~ "Brasil",
+    country_clean == "Argentina" ~ "Argentina",
+    country_clean == "Uruguay" ~ "Uruguai",
+    country_clean %in% c("Paraguay / Paraguái") ~ "Paraguai",
+    country_clean == "Chile" ~ "Chile",
+    country_clean == "Colombia" ~ "Colômbia",
+    country_clean == "Perú" ~ "Peru",
+    country_clean == "United States" ~ "Estados Unidos",
+    
+    # ----------------------------
+    # África
+    # ----------------------------
+    country_clean == "South Africa" ~ "África do Sul",
+    
+    # ----------------------------
+    # Fallback seguro
+    # ----------------------------
+    TRUE ~ country_clean
+  )
+}
+
+# ---- obter cidade quando nao disponivel
+
+infer_city_from_address <- function(address, country_norm) {
+  
+  if (is.na(address)) return(NA_character_)
+  
+  parts <- str_split(address, ",")[[1]]
+  parts <- str_trim(parts)
+  
+  # remove entradas muito longas (rua completa, regiões extensas)
+  parts <- parts[nchar(parts) <= 40]
+  
+  # remove país
+  parts <- parts[!str_detect(parts, fixed(country_norm, ignore_case = TRUE))]
+  
+  # remove tokens com números (rua, CEP)
+  parts <- parts[!str_detect(parts, "\\d")]
+  
+  # heurística: segunda posição costuma ser a cidade
+  if (length(parts) >= 2) {
+    return(parts[2])
+  }
+  
+  NA_character_
+}
+
+
+# ---- Construir localização final
+
+df_geo <- df_geo |>
+  rowwise() |>
+  mutate(
+    city_from_address = if_else(
+      is.na(city),
+      infer_city_from_address(address, country_norm),
+      NA_character_
+    ),
+    
+    # -------- popup_local --------
+    popup_local = coalesce(
+      city,
+      city_from_address,
+      neighbourhood,
+      suburb,
+      state,
+      country_norm
+    ),
+    
+    # -------- location (mais descritivo) --------
+    location = if_else(
+      country_norm %in% c("Brasil", "Brazil"),
+      paste0(
+        coalesce(city, city_from_address, suburb, state),
+        ifelse(!is.na(state), paste0(" - ", state), "")
+      ),
+      paste0(
+        coalesce(city, city_from_address, suburb, state),
+        ", ",
+        country_norm
+      )
+    )
+  ) |>
+  ungroup()
+
 
 data <- df_geo |>
-  select(names(data0), city, state, country) |>
+  select(names(data0), 
+         name, suburb, city, city_from_address,
+         state, country, address,
+         neighbourhood) |>
   mutate(
-    local = if_else(
-      is.na(city) | city == "",
-      state,
-      city
+    
+    # -----------------------------
+    # Parte local (name > suburb > city)
+    # -----------------------------
+    local_part = pmap_chr(
+      list(name, suburb, city, city_from_address),
+      ~ {
+        parts <- c(...)
+        parts <- parts[!is.na(parts) & parts != ""]
+        paste(parts, collapse = ", ")
+      }
     ),
-    location = if_else(
-      country %in% c("Brazil", "Brasil"),
-      paste0(local, ", ", state),
-      paste0(local, ", ", country)
+    
+    # -----------------------------
+    # País normalizado
+    # -----------------------------
+    country_norm = normalize_country(country),
+    
+    # -----------------------------
+    # Localização final
+    # -----------------------------
+    location = case_when(
+      
+      # Brasil
+      country_norm == "Brasil" & local_part != "" & !is.na(state) ~
+        paste0(local_part, ", ", state),
+      
+      country_norm == "Brasil" & local_part != "" ~
+        local_part,
+      
+      # Fora do Brasil
+      country_norm != "Brasil" & local_part != "" ~
+        paste0(local_part, ", ", country_norm),
+      
+      # Fallback extremo
+      TRUE ~ country_norm
+    ),
+    
+    popup_local = coalesce(
+      city,
+      city_from_address,
+      neighbourhood,
+      suburb,
+      state,
+      country_norm
     )
-  )
+  ) |>
+  select(-local_part)
 
 # ---------------- Popup HTML ----------------
 
@@ -185,11 +377,65 @@ data <- data |>
   arrange(date) |>
   mutate(id = row_number())
 
+# data$popup_html <- paste0(
+#   "<div class='popup-card'>",
+#   
+#   "<div class='popup-meta'>",
+#   "📍 ", data$location, "<br/>",
+#   "📅 ", format(data$date, "%d/%m/%Y"),
+#   "</div>",
+#   
+#   "<div class='popup-image'>",
+#   "<img src='", data$thumb_url, "' />",
+#   "</div>",
+#   
+#   "<div class='popup-link'>",
+#   "<a href='#' onclick=\"Shiny.setInputValue(
+#         'open_photo', ", data$id, ",
+#         {priority: 'event'}
+#       ); return false;\">🔍 Ampliar imagem</a>",
+#   "</div>",
+#   
+#   "</div>"
+# )
+
+country_flag <- c(
+  "Brasil" = "🇧🇷",
+  "Argentina" = "🇦🇷",
+  "Uruguai" = "🇺🇾",
+  "Paraguai" = "🇵🇾",
+  "Chile" = "🇨🇱",
+  "Estados Unidos" = "🇺🇸",
+  "Reino Unido" = "🇬🇧",
+  "Irlanda" = "🇮🇪",
+  "França" = "🇫🇷",
+  "Alemanha" = "🇩🇪",
+  "Áustria" = "🇦🇹",
+  "Suíça" = "🇨🇭",
+  "Bélgica" = "🇧🇪",
+  "Itália" = "🇮🇹",
+  "Dinamarca" = "🇩🇰",
+  "Suécia" = "🇸🇪",
+  "Islândia" = "🇮🇸",
+  "Hungria" = "🇭🇺",
+  "República Tcheca" = "🇨🇿",
+  "Eslováquia" = "🇸🇰",
+  "Polônia" = "🇵🇱",
+  "Estônia" = "🇪🇪",
+  "Letônia" = "🇱🇻",
+  "Malta" = "🇲🇹",
+  "Grécia" = "🇬🇷",
+  "Turquia" = "🇹🇷",
+  "Rússia" = "🇷🇺",
+  "África do Sul" = "🇿🇦"
+)
+
+
 data$popup_html <- paste0(
   "<div class='popup-card'>",
   
   "<div class='popup-meta'>",
-  "📍 ", data$location, "<br/>",
+  "📍 ", data$popup_local, "<br/>",
   "📅 ", format(data$date, "%d/%m/%Y"),
   "</div>",
   
@@ -208,6 +454,8 @@ data$popup_html <- paste0(
 )
 
 
+
+
 # ---------------- Save ----------------
 saveRDS(data, data_out)
 data <- readRDS("data/photos_data.rds")
@@ -217,19 +465,17 @@ save(data, file = "data/data.RData")
 cat("✔ Processamento concluído:", nrow(data), "fotos\n")
 
 
-rm(data0, df_geo, exif_df, google_geo, imgs_df, missing_gps)
+# rm(data0, df_geo, exif_df, google_geo, imgs_df, missing_gps)
 
 # Falta no photos:
 # Milao
 # Hamburgo
-# Napole
-# Ismir
-# Riiga
 # Blue Lagoon Islancia
 # Montevideo
 
-# Araxa
 # Santos
 # Guarapari
-# Florianopolis
 # Lapinha da Serra
+
+
+#---
