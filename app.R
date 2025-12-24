@@ -381,13 +381,59 @@ server <- function(input, output, session) {
   })
   
   # ---- Painel lateral ----
+  # output$photo_panel <- renderUI({
+  #   
+  #   if (is.null(selected_photo())) {
+  #     div(
+  #       class = "right-panel",
+  #       h4("Clique em uma foto no mapa")
+  #     )
+  #   } else {
+  #     
+  #     row <- data[data$id == selected_photo(), ]
+  #     
+  #     div(
+  #       class = "right-panel",
+  #       
+  #       div(
+  #         class = "photo-location",
+  #         tags$span("📍 ", row$location)
+  #       ),
+  #       
+  #       div(
+  #         class = "photo-date",
+  #         tags$span("📅 ", format(row$date, "%d/%m/%Y"))
+  #       ),
+  #       
+  #       div(
+  #         class = "photo-container",
+  #         tags$img(src = row$medium_url)
+  #       ),
+  #       
+  #       div(
+  #         class = "photo-meta",
+  #         sprintf("Foto %d de %d", selected_photo(), n_photos)
+  #       ),
+  #       
+  #       div(
+  #         class = "photo-controls",
+  #         fluidRow(
+  #           column(6, actionButton("prev_photo", "←", width = "100%")),
+  #           column(6, actionButton("next_photo", "→", width = "100%"))
+  #         )
+  #       )
+  #     )
+  #   }
+  # })
   output$photo_panel <- renderUI({
     
     if (is.null(selected_photo())) {
+      
       div(
         class = "right-panel",
         h4("Clique em uma foto no mapa")
       )
+      
     } else {
       
       row <- data[data$id == selected_photo(), ]
@@ -395,26 +441,40 @@ server <- function(input, output, session) {
       div(
         class = "right-panel",
         
+        # ---- Localização ----
         div(
           class = "photo-location",
-          tags$span("📍 ", row$location)
+          HTML(paste0(
+            "📍 ",
+            row$location, " ",
+            if (!is.na(row$country_norm) &&
+                row$country_norm %in% names(country_flag)) {
+              country_flag[row$country_norm]
+            } else {
+              ""
+            }
+          ))
         ),
         
+        # ---- Data ----
         div(
           class = "photo-date",
-          tags$span("📅 ", format(row$date, "%d/%m/%Y"))
+          paste0("📅 ", format(row$date, "%d/%m/%Y"))
         ),
         
+        # ---- Imagem ----
         div(
           class = "photo-container",
           tags$img(src = row$medium_url)
         ),
         
+        # ---- Meta ----
         div(
           class = "photo-meta",
           sprintf("Foto %d de %d", selected_photo(), n_photos)
         ),
         
+        # ---- Controles ----
         div(
           class = "photo-controls",
           fluidRow(
@@ -425,6 +485,7 @@ server <- function(input, output, session) {
       )
     }
   })
+  
   
   # ---- Botões ----
   observeEvent(input$next_photo, {
