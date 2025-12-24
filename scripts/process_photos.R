@@ -476,6 +476,3 @@ cat("✔ Processamento concluído:", nrow(data), "fotos\n")
 # Santos
 # Guarapari
 # Lapinha da Serra
-
-
-#---
