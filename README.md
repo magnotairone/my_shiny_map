@@ -1,7 +1,6 @@
 TL;DR
-- Visualize fotos geolocalizadas em um mapa (Shiny + Leaflet).  
-- Suporta duas fontes: CSV com URLs (Drive → CSV) ou fotos locais (fallback).  
-- Estrutura simples: coloque CSV em `data/` ou fotos em `photos/` e rode o app.
+- Visualização de fotos geolocalizadas em um mapa (Shiny + Leaflet).  
+- Fotos amadoras que fiz durante minhas viagens.
 
 # my_photo_map
 
@@ -26,6 +25,3 @@ Linguagem principal
 
 Licença
 - Apache-2.0
-
-Descrição curta (para exibição)
-- Aplicação Shiny para mapear e explorar fotos geolocalizadas, com suporte a fotos locais e a um fluxo Drive → CSV para manter o repositório leve.
