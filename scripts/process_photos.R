@@ -6,17 +6,23 @@ library(jsonlite)
 library(tidygeocoder)
 
 # ---------------- Config ----------------
+# As imagens geradas ficam FORA da pasta do app (app/), para nao entrarem no
+# bundle do shinylive. Elas sao copiadas para docs/img no deploy
+# (ver scripts/shinylive.R) e carregadas pelo navegador sob demanda.
 photos_dir  <- "photos"
-www_photos  <- file.path("www", "photos")
-www_thumbs  <- file.path("www", "thumbs")
-data_out    <- file.path("data", "photos_data.rds")
+img_photos  <- file.path("img", "photos")
+img_thumbs  <- file.path("img", "thumbs")
+data_out    <- file.path("app", "data", "photos_data.rds")
 
-thumb_width <- 120
-medium_max  <- 1024
+# Geometrias do ImageMagick: "NxN>" limita o maior lado, sem ampliar.
+thumb_geom   <- "240x240>"    # exibida a ~120px no popup (2x p/ telas retina)
+medium_geom  <- "1024x1024>"
+thumb_quality  <- 75
+medium_quality <- 78
 
-dir.create(www_photos, recursive = TRUE, showWarnings = FALSE)
-dir.create(www_thumbs, recursive = TRUE, showWarnings = FALSE)
-dir.create("data", recursive = TRUE, showWarnings = FALSE)
+dir.create(img_photos, recursive = TRUE, showWarnings = FALSE)
+dir.create(img_thumbs, recursive = TRUE, showWarnings = FALSE)
+dir.create(dirname(data_out), recursive = TRUE, showWarnings = FALSE)
 
 # ---------------- Files ----------------
 img_files <- list.files(
@@ -30,51 +36,57 @@ img_files <- list.files(
 stopifnot(length(img_files) > 0)
 
 # ---------------- Prepare images (loop) ----------------
+webp_name <- function(path) {
+  paste0(tools::file_path_sans_ext(basename(path)), ".webp")
+}
+
 prepare_images <- function(files) {
-  
-  # pré-aloca lista (muito mais eficiente que crescer dinamicamente)
+
   out <- vector("list", length(files))
-  
+
   for (i in seq_along(files)) {
-    
+
     f <- files[i]
-    base <- basename(f)
-    
-    thumb_path  <- file.path(www_thumbs, base)
-    medium_path <- file.path(www_photos, base)
-    
-    # ---- Thumbnail ----
-    if (!file.exists(thumb_path)) {
+    out_name <- webp_name(f)
+
+    thumb_path  <- file.path(img_thumbs, out_name)
+    medium_path <- file.path(img_photos, out_name)
+
+    if (!file.exists(thumb_path) || !file.exists(medium_path)) {
       try({
-        image_read(f) |>
-          image_scale(thumb_width) |>
-          image_write(thumb_path)
+        # image_orient(): aplica a rotacao do EXIF antes de descarta-lo
+        # image_strip(): remove EXIF (GPS, camera, miniatura embutida...)
+        img <- image_read(f) |>
+          image_orient() |>
+          image_strip()
+
+        if (!file.exists(medium_path)) {
+          img |>
+            image_scale(medium_geom) |>
+            image_write(medium_path, format = "webp", quality = medium_quality)
+        }
+
+        if (!file.exists(thumb_path)) {
+          img |>
+            image_scale(thumb_geom) |>
+            image_write(thumb_path, format = "webp", quality = thumb_quality)
+        }
       }, silent = TRUE)
     }
-    
-    # ---- Imagem média ----
-    if (!file.exists(medium_path)) {
-      try({
-        image_read(f) |>
-          image_scale(medium_max) |>
-          image_write(medium_path)
-      }, silent = TRUE)
-    }
-    
-    # ---- Resultado da imagem i ----
+
+    # caminhos relativos a img/ (o app adiciona o prefixo)
     out[[i]] <- tibble(
       SourceFile = f,
-      FileName   = base,
-      thumb_url  = paste0("thumbs/", base),
-      medium_url = paste0("photos/", base)
+      FileName   = basename(f),
+      thumb_url  = paste0("thumbs/", out_name),
+      medium_url = paste0("photos/", out_name)
     )
-    
-    # (opcional) progresso simples
+
     if (i %% 50 == 0) {
       message(sprintf("Processadas %d / %d imagens", i, length(files)))
     }
   }
-  
+
   bind_rows(out)
 }
 
@@ -371,33 +383,13 @@ data <- df_geo |>
   ) |>
   select(-local_part)
 
-# ---------------- Popup HTML ----------------
+# ---------------- Ordenacao e bandeiras ----------------
 
 data <- data |>
   arrange(date) |>
   mutate(id = row_number())
 
-# data$popup_html <- paste0(
-#   "<div class='popup-card'>",
-#   
-#   "<div class='popup-meta'>",
-#   "📍 ", data$location, "<br/>",
-#   "📅 ", format(data$date, "%d/%m/%Y"),
-#   "</div>",
-#   
-#   "<div class='popup-image'>",
-#   "<img src='", data$thumb_url, "' />",
-#   "</div>",
-#   
-#   "<div class='popup-link'>",
-#   "<a href='#' onclick=\"Shiny.setInputValue(
-#         'open_photo', ", data$id, ",
-#         {priority: 'event'}
-#       ); return false;\">🔍 Ampliar imagem</a>",
-#   "</div>",
-#   
-#   "</div>"
-# )
+# O popup HTML e montado no app (app/app.R), pois depende do caminho das imagens.
 
 country_flag <- c(
   "Brasil" = "🇧🇷",
@@ -405,6 +397,8 @@ country_flag <- c(
   "Uruguai" = "🇺🇾",
   "Paraguai" = "🇵🇾",
   "Chile" = "🇨🇱",
+  "Colômbia" = "🇨🇴",
+  "Peru" = "🇵🇪",
   "Estados Unidos" = "🇺🇸",
   "Reino Unido" = "🇬🇧",
   "Irlanda" = "🇮🇪",
@@ -431,35 +425,13 @@ country_flag <- c(
 )
 
 
-data$popup_html <- paste0(
-  "<div class='popup-card'>",
-  
-  "<div class='popup-meta'>",
-  "📍 ", data$popup_local, "<br/>",
-  "📅 ", format(data$date, "%d/%m/%Y"),
-  "</div>",
-  
-  "<div class='popup-image'>",
-  "<img src='", data$thumb_url, "' />",
-  "</div>",
-  
-  "<div class='popup-link'>",
-  "<a href='#' onclick=\"Shiny.setInputValue(
-        'open_photo', ", data$id, ",
-        {priority: 'event'}
-      ); return false;\">🔍 Ampliar imagem</a>",
-  "</div>",
-  
-  "</div>"
-)
-
-
+# bandeira salva como coluna, para o app nao depender deste objeto
+data$flag <- unname(country_flag[data$country_norm])
+data$flag[is.na(data$flag)] <- ""
 
 
 # ---------------- Save ----------------
 saveRDS(data, data_out)
-data <- readRDS("data/photos_data.rds")
-save(data, file = "data/data.RData")
 
 
 cat("✔ Processamento concluído:", nrow(data), "fotos\n")

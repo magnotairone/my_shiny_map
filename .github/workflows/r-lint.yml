@@ -39,10 +39,10 @@ jobs:
 
       - name: Lint R files
         run: |
-          Rscript -e 'lintr::lint("app.R")'
+          Rscript -e 'lintr::lint("app/app.R")'
           Rscript -e 'if (dir.exists("scripts")) lintr::lint_dir("scripts")'
 
       - name: Syntax check (parse)
         run: |
-          Rscript -e 'parse(file="app.R")'
+          Rscript -e 'parse(file="app/app.R")'
           Rscript -e 'if (file.exists("scripts/extract_exif.R")) parse(file="scripts/extract_exif.R")'

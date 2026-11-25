@@ -11,14 +11,21 @@ Objetivo
 - Suportar duas fontes de imagens: URLs externas (ex.: Google Drive via CSV de metadados) ou arquivos locais (pasta `photos/`), com fallback automático entre elas.
 
 Estrutura geral do repositório
-- `app.R` — aplicação Shiny principal (lógica de leitura de metadados, geração de popups e mapa).
+- `app/` — o app Shiny (é só esta pasta que o shinylive empacota).
+  - `app.R` — aplicação principal (mapa, popups e painel lateral).
+  - `data/photos_data.rds` — metadados das fotos (coordenadas, data, local, bandeira, caminhos das imagens).
+- `img/thumbs/`, `img/photos/` — miniaturas (240px) e fotos médias (1024px) em WebP, sem EXIF. Ficam **fora** de `app/` de propósito: assim não entram no bundle do shinylive e o navegador baixa cada imagem só quando ela é exibida.
+- `photos/` — originais (Google Takeout) + JSONs de metadados; só os JSONs são versionados.
 - `scripts/`
-  - `upload_to_drive_and_index.R` — script para enviar fotos ao Google Drive e gerar `data/photo_metadata_drive.csv`.
-  - `extract_exif.R` — script auxiliar para extrair EXIF localmente (opcional).
-- `data/` — local para CSVs de metadados (ex.: `photo_metadata_drive.csv`).
-- `www/photos/`, `www/thumbs/` — diretórios gerados pelo app em modo local para armazenar imagens médias e miniaturas.
-- `.github/workflows/` — workflows (lint, checagens) usados no repositório.
+  - `process_photos.R` — lê `photos/`, gera `img/` e `app/data/photos_data.rds`.
+  - `shinylive.R` — exporta `app/` para `docs/` e copia `img/` para `docs/img/`.
+  - `upload_to_drive_and_index.R`, `extract_exif.R` — scripts auxiliares (opcionais).
+- `.github/workflows/` — lint e checagens.
 - `LICENSE` — Apache License 2.0.
+
+Como rodar
+- Local: `shiny::runApp("app")`
+- Site estático: `source("scripts/shinylive.R")` e depois `httpuv::runStaticServer("docs")`
 
 Linguagem principal
 - R
