@@ -509,6 +509,7 @@ server <- function(input, output, session) {
   
   # ---- Botões ----
   observeEvent(input$next_photo, {
+    req(selected_photo())
     new_id <- selected_photo() + 1
     if (new_id > n_photos) new_id <- 1
     selected_photo(new_id)
@@ -516,6 +517,7 @@ server <- function(input, output, session) {
   })
   
   observeEvent(input$prev_photo, {
+    req(selected_photo())
     new_id <- selected_photo() - 1
     if (new_id < 1) new_id <- n_photos
     selected_photo(new_id)
@@ -524,6 +526,7 @@ server <- function(input, output, session) {
   
   # ---- Teclado ----
   observeEvent(input$key_next, {
+    req(selected_photo())
     new_id <- selected_photo() + 1
     if (new_id > n_photos) new_id <- 1
     selected_photo(new_id)
@@ -531,6 +534,7 @@ server <- function(input, output, session) {
   })
   
   observeEvent(input$key_prev, {
+    req(selected_photo())
     new_id <- selected_photo() - 1
     if (new_id < 1) new_id <- n_photos
     selected_photo(new_id)
